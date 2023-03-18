@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import permissions
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer
+from .serializers import UserSerializer, GroupSerializer, ReviewSerializer, \
+    CategorySerializer, BusinessSerializer
+from .models import Review, Business, Category
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -21,4 +23,31 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-# Create your views here.
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows reviews to be viewed or edited.
+    """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class BusinessViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows business to be viewed or edited.
+    """
+    queryset = Business.objects.all()
+    serializer_class = BusinessSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows category to be viewed or edited.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
